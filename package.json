@@ -1,0 +1,20 @@
+{
+  "name": "storefront-backend-nanodegree-project",
+  "version": "1.0.0",
+  "description": "This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FADL285/Storefront-Backend-Nanodegree-Project.git"
+  },
+  "keywords": [],
+  "author": "Mohamed Fadl <Mohamed.Fadl2852@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FADL285/Storefront-Backend-Nanodegree-Project/issues"
+  },
+  "homepage": "https://github.com/FADL285/Storefront-Backend-Nanodegree-Project#readme"
+}
