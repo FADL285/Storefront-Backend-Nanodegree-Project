@@ -16,7 +16,7 @@ app.use(cors())
 // Parser Middleware for JSON payloads
 app.use(json())
 // Routes
-app.use('/', routes)
+app.use('/api', routes)
 // Error Handler Middleware
 app.use(errorMiddleware)
 
