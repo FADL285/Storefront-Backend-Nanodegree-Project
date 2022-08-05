@@ -1,17 +1,8 @@
-import express, { Application, Request, Response } from 'express'
+import app from './app'
+import config from './config'
 
-const PORT = process.env.PORT || 3000
-
-const app: Application = express()
-
-app.get('/', (_req: Request, res: Response) => {
-  res.json({
-    message: 'Hello world 🌏🌏'
-  })
-})
+const PORT = config.port || 3000
 
 app.listen(PORT, () => {
-  console.log(`App listening on ::${PORT}`)
+  console.log(`App running on port: ${PORT}`)
 })
-
-export default app

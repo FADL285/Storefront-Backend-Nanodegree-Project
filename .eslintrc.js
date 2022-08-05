@@ -19,6 +19,12 @@ module.exports = {
     'no-duplicate-imports': 'error',
     'no-use-before-define': ['error', { functions: true, classes: true }],
     'no-var': 'error',
+    // note you must disable the base rule as it can report incorrect errors
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { argsIgnorePattern: '_next' }
+    ],
     'prefer-const': 'error',
     eqeqeq: 'error',
     camelcase: 'warn',
