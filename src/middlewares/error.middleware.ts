@@ -7,9 +7,10 @@ export const errorMiddleware = (
   res: Response,
   _next: NextFunction
 ) => {
-  const status = error.status || 500
-  res.status(status).json({
+  const statusCode = error.statusCode || 500
+  res.status(statusCode).json({
     status: 'error',
+    statusCode,
     message: error.message || 'Oops! Something went wrong.'
   })
 }

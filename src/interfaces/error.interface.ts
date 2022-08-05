@@ -1,3 +1,5 @@
 export interface IError extends Error {
-  status: number
+  statusCode?: number
+  detail?: string
+  code?: string
 }
