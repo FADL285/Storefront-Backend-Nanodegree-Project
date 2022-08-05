@@ -14,9 +14,9 @@ const {
 } = process.env
 
 export default {
-  port: PORT,
+  port: PORT as unknown as number,
   dbHost: POSTGRES_HOST,
-  dbPort: POSTGRES_PORT,
+  dbPort: POSTGRES_PORT as unknown as number,
   dbName: NODE_ENV === 'development' ? POSTGRES_DB : POSTGRES_DB_TEST,
   dbUser: POSTGRES_USER,
   dbPassword: POSTGRES_PASSWORD
