@@ -27,7 +27,7 @@ export class UserModel {
     }
   }
   //    Get One User
-  static async show(id: string): Promise<IUser> {
+  static async show(id: string): Promise<IUser> | never {
     //    1. Open Connection with database
     const client = await db.connect()
     try {
@@ -54,7 +54,7 @@ export class UserModel {
     }
   }
   //    Create User
-  static async create(user: IUser): Promise<IUser> {
+  static async create(user: IUser): Promise<IUser> | never {
     //    1. Open Connection with database
     const client = await db.connect()
     try {
@@ -84,7 +84,7 @@ export class UserModel {
     }
   }
   //    Edit User
-  static async edit(user: Partial<IUser>): Promise<IUser> {
+  static async edit(user: Partial<IUser>): Promise<IUser> | never {
     //    1. Open Connection with database
     const client = await db.connect()
     try {
@@ -129,7 +129,7 @@ export class UserModel {
     }
   }
   //    Delete User
-  static async delete(id: string): Promise<IUser> {
+  static async delete(id: string): Promise<IUser> | never {
     //    1. Open Connection with database
     const client = await db.connect()
     try {
