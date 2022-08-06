@@ -136,10 +136,9 @@ export class UserModel {
       //    2. Run the queries
       const selectQuery = `SELECT COUNT(*) FROM users WHERE id = ($1)`
       const {
-        rows: [result]
+        rows: [{ count: result }]
       } = await client.query(selectQuery, [id])
-      //    3. Return the data
-      if (result === 0)
+      if (parseInt(result) === 0)
         throwError({
           message: `There is no user with id "${id}"`,
           statusCode: 404
@@ -149,7 +148,7 @@ export class UserModel {
       const {
         rows: [user]
       } = await client.query(updateQuery, [id])
-
+      //    3. Return the data
       return user
     } catch (err) {
       return throwError({
