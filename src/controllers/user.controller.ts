@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { UserModel } from '../models/user.model'
 import { IUser } from '../interfaces/user.interface'
+import { generateToken } from '../utils'
 
 export const getAllUsers = async (
   _req: Request,
@@ -82,6 +83,31 @@ export const deleteUser = async (
     const deleteUser = await UserModel.delete(req.params.id)
     res.json({
       data: deleteUser,
+      status: 'success',
+      statusCode: 200
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const authenticateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await UserModel.authenticate(req.body.email, req.body.password)
+    const token = generateToken({
+      id: user.id,
+      email: user.email,
+      username: user.username
+    })
+    res.json({
+      data: {
+        ...user,
+        token
+      },
       status: 'success',
       statusCode: 200
     })

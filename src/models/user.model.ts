@@ -1,6 +1,6 @@
 import db from '../database'
 import { IUser } from '../interfaces/user.interface'
-import { throwError } from '../utils'
+import { throwError, hashPassword, validatePassword } from '../utils'
 import { IError } from '../interfaces/error.interface'
 
 export class UserModel {
@@ -63,11 +63,11 @@ export class UserModel {
       const {
         rows: [result]
       } = await client.query(query, [
-        user.email,
-        user.username,
+        user.email.toLowerCase(),
+        user.username.toLowerCase(),
         user.firstname,
         user.lastname,
-        user.password
+        await hashPassword(user.password)
       ])
       //    3. Return the data
       return result
@@ -108,8 +108,8 @@ export class UserModel {
       const {
         rows: [updatedUser]
       } = await client.query(updateQuery, [
-        email,
-        username,
+        email.toLowerCase(),
+        username.toLowerCase(),
         firstname,
         lastname,
         user.id
@@ -151,6 +151,53 @@ export class UserModel {
       } = await client.query(updateQuery, [id])
 
       return user
+    } catch (err) {
+      return throwError({
+        message: (err as IError).message,
+        statusCode: (err as IError).statusCode,
+        code: (err as IError).code,
+        detail: (err as IError).detail
+      })
+    } finally {
+      //    4. Close the connection
+      client.release()
+    }
+  }
+  //  Authenticate User
+  static async authenticate(
+    email: string,
+    password: string
+  ): Promise<Partial<IUser>> | never {
+    //    1. Open Connection with database
+    const client = await db.connect()
+    try {
+      //    2. Run the queries
+      const query = `SELECT * FROM users WHERE email = ($1)`
+      const {
+        rows: [user]
+      } = await client.query(query, [email.toLowerCase()])
+      //    3. Return the data
+      if (!user)
+        throwError({
+          message: `Invalid Credentials`,
+          statusCode: 401
+        })
+
+      const isValidPassword = await validatePassword(password, user.password)
+      if (!isValidPassword) {
+        throwError({
+          message: `Invalid Credentials`,
+          statusCode: 401
+        })
+      }
+
+      return {
+        id: user.id,
+        email: email,
+        username: user.username,
+        firstname: user.firstname,
+        lastname: user.lastname
+      }
     } catch (err) {
       return throwError({
         message: (err as IError).message,
