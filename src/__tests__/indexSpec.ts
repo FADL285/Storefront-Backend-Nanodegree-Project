@@ -1,11 +1,11 @@
 import supertest from 'supertest'
-import app from '../index'
+import app from '../app'
 
 const request = supertest(app)
 
-describe('Test Basic Server', function () {
+describe('Test Server Status', function () {
   it('Get the / endpoint', async function () {
-    const response = await request.get('/')
+    const response = await request.get('/api')
     expect(response.status).toBe(200)
   })
 })
