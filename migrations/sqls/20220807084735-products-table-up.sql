@@ -4,5 +4,6 @@ CREATE TABLE products
 (
     id    uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     name  VARCHAR(64)   NOT NULL,
-    price NUMERIC(8, 2) NOT NULL
+    price NUMERIC(8, 2) NOT NULL,
+    category VARCHAR(64) NOT NULL
 );

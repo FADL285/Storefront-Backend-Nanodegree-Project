@@ -11,10 +11,10 @@ import authenticationMiddleware from '../../middlewares/authentication.middlewar
 
 const router = Router()
 
-router.route('/').get(getAllUsers).post(createUser)
+router.route('/').get(authenticationMiddleware, getAllUsers).post(createUser)
 router
   .route('/:id')
-  .get(getUser)
+  .get(authenticationMiddleware, getUser)
   .patch(authenticationMiddleware, updateUser)
   .delete(authenticationMiddleware, deleteUser)
 router.post('/authenticate', authenticateUser)
