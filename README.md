@@ -5,63 +5,170 @@
 https://user-images.githubusercontent.com/53804570/183279249-b74d7a41-36e1-4f5d-9bfe-7eb64b9db3d1.mp4
 
 ### Project Summary
-The company stakeholders have decided they want to set up an online store to make their great product ideas available for purchase -- and they want you and your co-worker to build it.
 
-The stakeholders have put together a list of requirements for this online store.
+The company stakeholders have decided they want to set up an online store to make their great product ideas available
+for purchase -- and they want you and your co-worker to build it.
 
-My job is to architect the database, its tables and columns to fulfill the data requirements and craft a RESTful API that exposes that information to the frontend developer.
+The stakeholders have put together a list of [requirements](REQUIREMENTS.md) for this online store.
 
-The application needs to be ready for beta tests, so it needs to have tests, keep user information secure, and provide user authentication tokens that are ready to integrate with the frontend.
+My job is to design the database, its tables and columns to fulfill the data requirements and craft a RESTful API that
+exposes that information to the frontend developer.
+
+The application needs to be ready for beta tests, so it needs to have tests, keep user information secure, and provide
+user authentication tokens that are ready to integrate with the frontend.
+
+## Table of Contents
+
+1. Getting Started
+    1. Prerequisites
+    2. Environment Setup
+    3. Project Setup
+    4. Running the App
+2. Project Scripts
+3. Endpoints
+4. Database Schema
 
 ## Getting Started
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+These instructions will help you to run the project on your local machine for development and testing
+purposes.
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+### Prerequisites
 
-## Steps to Completion
+1. [node](https://nodejs.org/en/)  👉👉  ``To Run The Application.``
+2. [docker](https://www.docker.com/products/docker-desktop/)
+   👉👉  ``Install Docker to Run Postgres Database with docker-compose.``
 
-### 1. Plan to Meet Requirements
+> Note: You can ignore docker installation and install postgresql on your machine.
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+### Environment Setup
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+**Copy ``.env.exmample to .env`` and update the environment variables with your values**
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+```bash
+cp .env.example .env
+```
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+**``.env`` Structure**
 
-### 2.  DB Creation and Migrations
+```bash
+# App Configuration
+PORT=3000
+NODE_ENV=development
+# DB Configuration
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=5432
+POSTGRES_DB="DATABASE_NAME for Dev"
+POSTGRES_DB_TEST="DATABASE_NAME for Test"
+POSTGRES_USER="DATABASE USERNAME"
+POSTGRES_PASSWORD="DATABASE PASSWORD"
+# Bcrypt Configuration
+BCRYPT_PASSWORD="YOUR SECRET PASSWORD"
+SALT_ROUNDS=10
+# JWT Configuration
+JWT_SECRET="YOUR SECRET PASSWORD FOR TOKEN"
+```
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+### Project Setup
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+**Install Dependencies**
 
-### 3. Models
+```bash
+npm install
+```
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+**Start Postgres Server (on Docker)**
 
-### 4. Express Handlers
+```bash
+docker-compose up
+```
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+**Create the Database, if not already created**
 
-### 5. JWTs
+```postgresql
+CREATE DATABASE storefront; -- For Development purposes
+CREATE DATABASE storefront_test; -- For Testing purposes
+```
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+**Run database Migrations**
 
-### 6. QA and `README.md`
+```bash
+npm run migrate:up
+```
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+### Running the App
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+**Run the Application on development mode** 👉👉 App will run on [http://localhost:3000](http://localhost:3000)
+
+```bash
+npm run dev
+```
+
+**Build the Application for production and start it**
+
+```bash
+npm run start
+```
+
+## Project Scripts
+
+### Project setup
+
+```bash
+npm install
+```
+
+### Start the server for development
+
+```bash
+npm run dev
+```
+
+### Compiles and minifies for production
+
+```bash
+npm run build
+```
+
+### Start the server after build `production`
+
+```bash
+npm run start
+```
+
+### Run the unit tests
+
+```bash
+npm run test
+```
+
+### Run the database migrations
+
+```bash
+npm run migrate:up    # Create the database schema
+npm run migrate:down  # Drop the database tables
+```
+
+### Lints and run prettier to auto format
+
+```bash
+npm run format
+```
+
+```bash
+npm run lint
+```
+
+### Lints and fixes files
+
+```bash
+npm run lint:fix
+```
+
+## Endpoints
+
+See [REQUIREMENTS.md](REQUIREMENTS.md) file
+
+## Database Schema
+
+See [REQUIREMENTS.md](REQUIREMENTS.md) file
