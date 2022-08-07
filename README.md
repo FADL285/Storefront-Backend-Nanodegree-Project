@@ -19,14 +19,14 @@ user authentication tokens that are ready to integrate with the frontend.
 
 ## Table of Contents
 
-1. Getting Started
-    1. Prerequisites
-    2. Environment Setup
-    3. Project Setup
-    4. Running the App
-2. Project Scripts
-3. Endpoints
-4. Database Schema
+1. [Getting Started](#getting-started)
+    1. [Prerequisites](#prerequisites)
+    2. [Environment Setup](#environment-setup)
+    3. [Project Setup](#project-setup)
+    4. [Running the App](#running-the-app)
+2. [Project Scripts](#project-scripts)
+3. [Endpoints](#endpoints)
+4. [Database Schema](#database-schema)
 
 ## Getting Started
 
