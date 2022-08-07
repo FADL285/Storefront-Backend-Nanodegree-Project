@@ -1,5 +1,18 @@
 # Storefront Backend Project
 
+## Project Overview
+
+https://user-images.githubusercontent.com/53804570/183279249-b74d7a41-36e1-4f5d-9bfe-7eb64b9db3d1.mp4
+
+### Project Summary
+The company stakeholders have decided they want to set up an online store to make their great product ideas available for purchase -- and they want you and your co-worker to build it.
+
+The stakeholders have put together a list of requirements for this online store.
+
+My job is to architect the database, its tables and columns to fulfill the data requirements and craft a RESTful API that exposes that information to the frontend developer.
+
+The application needs to be ready for beta tests, so it needs to have tests, keep user information secure, and provide user authentication tokens that are ready to integrate with the frontend.
+
 ## Getting Started
 
 This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
