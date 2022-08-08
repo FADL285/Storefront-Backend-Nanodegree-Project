@@ -80,4 +80,42 @@ export class ProductModel {
       client.release()
     }
   }
+  //    Edit Product
+  static async edit(product: Partial<IProduct>): Promise<IProduct> | never {
+    //    1. Open Connection with database
+    const client = await db.connect()
+    try {
+      //    2. Run the queries
+      const selectQuery = `SELECT name, price, category FROM products WHERE id = ($1)`
+      const {
+        rows: [result]
+      } = await client.query(selectQuery, [product.id])
+      //    3. Return the data
+      if (!result)
+        throwError({
+          message: `There is no product with id "${product.id}"`,
+          statusCode: 404
+        })
+      const name = product.name ? product.name : result.name
+      const price = product.price ? product.price : result.price
+      const category = product.category ? product.category : result.category
+
+      const updateQuery = `UPDATE products SET name=$1, price=$2, category=$3 WHERE id=$4 RETURNING *`
+      const {
+        rows: [updatedProduct]
+      } = await client.query(updateQuery, [name, price, category, product.id])
+
+      return updatedProduct
+    } catch (err) {
+      return throwError({
+        message: (err as IError).message,
+        statusCode: (err as IError).statusCode,
+        code: (err as IError).code,
+        detail: (err as IError).detail
+      })
+    } finally {
+      //    4. Close the connection
+      client.release()
+    }
+  }
 }
