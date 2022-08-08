@@ -53,6 +53,13 @@ describe('User Routes Endpoint Testing', function () {
         .send({ email: user.email, password: 'my_fake_pass' })
       expect(response.status).toBe(401)
     })
+    it('should be failed to authenticate and return 400 when request body does not contain email or password ', async function () {
+      const response = await request
+        .post('/api/users/authenticate')
+        .set('Content-Type', 'application/json')
+        .send({ email: user.email })
+      expect(response.status).toBe(400)
+    })
   })
 
   describe('User Routes CRUD Endpoints', function () {
@@ -87,20 +94,42 @@ describe('User Routes Endpoint Testing', function () {
 
       expect(response.status).toBe(409)
     })
-    //  TODO: Create if required params are not provided
+    it('should return an error 400 status code when not user properties are set', async function () {
+      const response = await request
+        .post('/api/users')
+        .set('Content-Type', 'application/json')
+        .send({
+          email: user.email,
+          username: user.username,
+          password: 'testPassword'
+        } as IUser)
+
+      expect(response.status).toBe(400)
+    })
 
     it('should return array of all Users', async function () {
       const response = await request
         .get('/api/users')
         .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${authToken}`)
+
       expect(response.status).toBe(200)
       expect(response.body.data.length).toBe(2)
+    })
+    it('should return 401 unauthorized when no valid token is provided', async function () {
+      const response = await request
+        .get('/api/users')
+        .set('Content-Type', 'application/json')
+
+      expect(response.status).toBe(401)
     })
 
     it('should return user data if user already exists', async function () {
       const response = await request
         .get(`/api/users/${user.id}`)
         .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${authToken}`)
+
       expect(response.status).toBe(200)
       expect(response.body.data.email).toBe(user.email)
     })
@@ -108,12 +137,15 @@ describe('User Routes Endpoint Testing', function () {
       const response = await request
         .get(`/api/users/9cf6e4e5-8508-4a6a-97e2-cb318201db0a`)
         .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${authToken}`)
       expect(response.status).toBe(404)
     })
     it('should return 400 status code if id is invalid ', async function () {
       const response = await request
         .get(`/api/users/9cf6e4e5`)
         .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${authToken}`)
+
       expect(response.status).toBe(400)
     })
 
