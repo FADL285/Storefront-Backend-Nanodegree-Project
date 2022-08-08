@@ -36,7 +36,6 @@ export const getUser = async (
   }
 }
 
-// TODO: Add The Validation
 export const createUser = async (
   req: Request,
   res: Response,

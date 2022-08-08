@@ -8,7 +8,8 @@ export const throwError = ({
   message,
   statusCode,
   code,
-  detail
+  detail,
+  errors
 }: Partial<IError>) => {
   if (code === '23505') {
     statusCode = 409
@@ -21,6 +22,7 @@ export const throwError = ({
   }
   const error: IError = new Error(message)
   error.statusCode = statusCode
+  error.errors = errors
   throw error
 }
 
