@@ -99,19 +99,19 @@ describe('User Model -- CRUD operations', function () {
       expect(editedUser.lastname).toBe('Fadl')
     })
     it('edit method should be rejected if the id was invalid', async function () {
-      const returnedUser = UserModel.edit({
+      const editedUser = UserModel.edit({
         id: 'cb2852000mfa',
         firstname: 'Mohamed'
       })
-      await expectAsync(returnedUser).toBeRejected()
+      await expectAsync(editedUser).toBeRejected()
     })
     it('edit method should be rejected if the user does not exist', async function () {
-      const returnedUser = UserModel.edit({
+      const editedUser = UserModel.edit({
         id: '9cf6e4e5-8508-4a6a-97e2-cb318201db0a',
         username: 'FADL285',
         lastname: 'FADL285'
       })
-      await expectAsync(returnedUser).toBeRejected()
+      await expectAsync(editedUser).toBeRejected()
     })
     it('delete method should delete the user and return it if the user exists', async function () {
       const deletedUser = await UserModel.delete(user.id as string)
