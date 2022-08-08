@@ -152,4 +152,26 @@ export class ProductModel {
       client.release()
     }
   }
+  //  Get Products By Category
+  static async getProductsByCategory(category: string): Promise<IProduct[]> {
+    //    1. Open Connection with database
+    const client = await db.connect()
+    try {
+      //    2. Run the query
+      const query = `SELECT * FROM products WHERE category = ($1)`
+      const { rows: result } = await client.query(query, [category])
+      //    3. Return the data
+      return result
+    } catch (err) {
+      return throwError({
+        message: (err as IError).message,
+        statusCode: (err as IError).statusCode,
+        code: (err as IError).code,
+        detail: (err as IError).detail
+      })
+    } finally {
+      // 4. Close the connection
+      client.release()
+    }
+  }
 }
