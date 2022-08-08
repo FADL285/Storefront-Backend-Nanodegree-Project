@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 
-const schema = [
+export const createUserValidator = [
   body('email', 'email must be a valid email address')
     .isEmail()
     .normalizeEmail(),
@@ -18,5 +18,3 @@ const schema = [
     min: 6
   })
 ]
-
-export { schema as createUserSchema }

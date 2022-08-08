@@ -8,16 +8,16 @@ import {
   authenticateUser
 } from '../../controllers/user.controller'
 import authenticationMiddleware from '../../middlewares/authentication.middleware'
-import { createUserSchema } from '../../schema/create-user.schema'
+import { createUserValidator } from '../../validations/users.validations'
 import { requestValidationMiddleware } from '../../middlewares/request-validation.middleware'
-import { authenticateUserSchema } from '../../schema/authenticate-user.schema'
+import { authenticateUserValidator } from '../../validations/authentication.validations'
 
 const router = Router()
 
 router
   .route('/')
   .get(authenticationMiddleware, getAllUsers)
-  .post(createUserSchema, requestValidationMiddleware, createUser)
+  .post(createUserValidator, requestValidationMiddleware, createUser)
 router
   .route('/:id')
   .get(authenticationMiddleware, getUser)
@@ -25,7 +25,7 @@ router
   .delete(authenticationMiddleware, deleteUser)
 router.post(
   '/authenticate',
-  authenticateUserSchema,
+  authenticateUserValidator,
   requestValidationMiddleware,
   authenticateUser
 )

@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express'
 import usersRoute from './api/users.routes'
+import productsRoutes from './api/products.routes'
 
 const router = Router()
 
@@ -12,12 +13,14 @@ router.get('/', (_req: Request, res: Response) => {
 
 // API Routes
 router.use('/users', usersRoute)
+router.use('/products', productsRoutes)
 
 // 404 Page Not Found
 router.use((req: Request, res: Response) =>
   res.status(404).json({
     message:
-      'Oops! You are lost, Read the API documentation to find your way back 🌏'
+      'Oops! You are lost, Read the API documentation to find your way back 🌏',
+    statusCode: 404
   })
 )
 
