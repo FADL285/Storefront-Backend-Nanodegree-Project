@@ -140,7 +140,7 @@ describe('User Routes Endpoint Testing', function () {
         .set('Authorization', `Bearer ${authToken}`)
       expect(response.status).toBe(404)
     })
-    it('should return 400 status code if id is invalid ', async function () {
+    it('should return 400 status code if id is invalid', async function () {
       const response = await request
         .get(`/api/users/9cf6e4e5`)
         .set('Content-Type', 'application/json')

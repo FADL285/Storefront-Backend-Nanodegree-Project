@@ -8,4 +8,8 @@ describe('Test Server Status', function () {
     const response = await request.get('/api')
     expect(response.status).toBe(200)
   })
+  it('should return 404 for unknown route', async function () {
+    const response = await request.get('/fadl')
+    expect(response.status).toBe(404)
+  })
 })

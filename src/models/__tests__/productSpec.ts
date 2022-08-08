@@ -33,6 +33,7 @@ describe('Product Model -- CRUD Operations', function () {
     beforeAll(async () => {
       const createdProduct = await ProductModel.create(product)
       product.id = createdProduct.id
+      product.category = createdProduct.category
     })
     afterAll(async () => {
       //    1. Open Connection with database
@@ -48,14 +49,14 @@ describe('Product Model -- CRUD Operations', function () {
       const createdProduct = await ProductModel.create({
         name: 'Test Product #2',
         price: 149.99,
-        category: 'OtherTestCat'
+        category: 'Other Category'
       })
       createdProduct.price = parseFloat(String(createdProduct.price))
       expect(createdProduct).toEqual({
         id: createdProduct.id,
         name: 'Test Product #2',
         price: 149.99,
-        category: 'OtherTestCat'
+        category: 'other category'
       })
     })
     it('index method should return Array of All Products', async function () {
