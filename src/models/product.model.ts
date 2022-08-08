@@ -26,4 +26,30 @@ export class ProductModel {
       client.release()
     }
   }
+  //    Get One Product
+  static async show(id: string): Promise<IProduct> | never {
+    //    1. Open Connection with database
+    const client = await db.connect()
+    try {
+      //    2. Run the query
+      const query = `SELECT * FROM products WHERE id = ($1)`
+      const {
+        rows: [result]
+      } = await client.query(query, [id])
+      if (!result)
+        return throwError({ message: 'product not found', statusCode: 404 })
+      //    3. Return the data
+      return result
+    } catch (err) {
+      return throwError({
+        message: (err as IError).message,
+        statusCode: (err as IError).statusCode,
+        code: (err as IError).code,
+        detail: (err as IError).detail
+      })
+    } finally {
+      //    4. Close the connection
+      client.release()
+    }
+  }
 }
