@@ -52,4 +52,32 @@ export class ProductModel {
       client.release()
     }
   }
+  //    Create Product
+  static async create(product: IProduct): Promise<IProduct> | never {
+    //    1. Open Connection with database
+    const client = await db.connect()
+    try {
+      //    2. Run the query
+      const query = `INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *`
+      const {
+        rows: [result]
+      } = await client.query(query, [
+        product.name,
+        product.price,
+        product.category
+      ])
+      //    3. Return the data
+      return result
+    } catch (err) {
+      return throwError({
+        message: (err as IError).message,
+        statusCode: (err as IError).statusCode,
+        code: (err as IError).code,
+        detail: (err as IError).detail
+      })
+    } finally {
+      //    4. Close the connection
+      client.release()
+    }
+  }
 }
