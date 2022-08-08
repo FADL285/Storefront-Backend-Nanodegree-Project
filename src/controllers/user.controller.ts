@@ -29,7 +29,8 @@ export const getUser = async (
     const user = await UserModel.show(req.params.id)
     res.json({
       data: user,
-      status: 'success'
+      status: 'success',
+      statusCode: 200
     })
   } catch (err) {
     next(err)
