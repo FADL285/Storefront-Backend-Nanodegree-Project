@@ -144,10 +144,10 @@ export class UserModel {
           statusCode: 404
         })
 
-      const updateQuery = `DELETE FROM users WHERE id = ($1) RETURNING id, email, username, firstname, lastname`
+      const deleteQuery = `DELETE FROM users WHERE id = ($1) RETURNING id, email, username, firstname, lastname`
       const {
         rows: [user]
-      } = await client.query(updateQuery, [id])
+      } = await client.query(deleteQuery, [id])
       //    3. Return the data
       return user
     } catch (err) {
