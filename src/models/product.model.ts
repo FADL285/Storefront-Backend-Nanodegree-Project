@@ -64,7 +64,7 @@ export class ProductModel {
       } = await client.query(query, [
         product.name,
         product.price,
-        product.category
+        product.category.toLowerCase()
       ])
       //    3. Return the data
       return result
@@ -103,7 +103,12 @@ export class ProductModel {
       const updateQuery = `UPDATE products SET name=$1, price=$2, category=$3 WHERE id=$4 RETURNING *`
       const {
         rows: [updatedProduct]
-      } = await client.query(updateQuery, [name, price, category, product.id])
+      } = await client.query(updateQuery, [
+        name,
+        price,
+        category.toLowerCase(),
+        product.id
+      ])
 
       return updatedProduct
     } catch (err) {
@@ -159,7 +164,9 @@ export class ProductModel {
     try {
       //    2. Run the query
       const query = `SELECT * FROM products WHERE category = ($1)`
-      const { rows: result } = await client.query(query, [category])
+      const { rows: result } = await client.query(query, [
+        category.toLowerCase()
+      ])
       //    3. Return the data
       return result
     } catch (err) {
