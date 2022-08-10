@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { OrderModel } from '../models/order.model'
-import { IOrder } from '../interfaces/order.interface'
+import { IOrder, OrderStatus } from '../interfaces/order.interface'
 
 export const getAllOrders = async (
   _req: Request,
@@ -9,6 +9,62 @@ export const getAllOrders = async (
 ) => {
   try {
     const orders = await OrderModel.index()
+    res.json({
+      data: orders,
+      status: 'success',
+      statusCode: 200
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const getAllOrdersByStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const orders = await OrderModel.getOrdersByStatus(
+      req.params.status as OrderStatus
+    )
+    res.json({
+      data: orders,
+      status: 'success',
+      statusCode: 200
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const getUserOrders = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const orders = await OrderModel.getUserOrders(req.params.id)
+    res.json({
+      data: orders,
+      status: 'success',
+      statusCode: 200
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+export const getUserOrdersByStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const orders = await OrderModel.getUserOrdersByStatus(
+      req.params.id,
+      req.params.status as OrderStatus
+    )
     res.json({
       data: orders,
       status: 'success',
