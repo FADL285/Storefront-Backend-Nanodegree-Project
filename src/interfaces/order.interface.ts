@@ -1,9 +1,9 @@
 import { IOrderProducts } from './order-products'
 
-enum OrderStatus {
-  ACTIVE,
-  COMPLETED,
-  CANCELED
+export enum OrderStatus {
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
+  CANCELED = 'canceled'
 }
 
 export interface IOrder {
