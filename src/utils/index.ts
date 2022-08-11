@@ -19,6 +19,14 @@ export const throwError = ({
   } else if (code === '22P02') {
     statusCode = 400
     message = (message as string).replace('type ', '')
+  } else if (code === '23503') {
+    statusCode = 404
+    if (detail?.includes('users')) message = 'Invalid userId, User not found.'
+    else if (detail?.includes('products'))
+      message = 'Invalid productId, Product not found.'
+    else if (detail?.includes('orders'))
+      message = 'Invalid orderId, Order not found.'
+    else message = detail
   }
   const error: IError = new Error(message)
   error.statusCode = statusCode
