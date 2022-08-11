@@ -1,4 +1,4 @@
-import { IOrderProducts } from './order-products'
+import { IProduct } from './product.interface'
 
 export enum OrderStatus {
   ACTIVE = 'active',
@@ -10,5 +10,6 @@ export interface IOrder {
   id?: string
   status: OrderStatus
   userId: string
-  products?: IOrderProducts[]
+  products?: IProduct[]
+  product?: IProduct
 }

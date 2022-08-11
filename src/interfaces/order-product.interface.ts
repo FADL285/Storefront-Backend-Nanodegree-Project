@@ -1,9 +1,10 @@
 import { IProduct } from './product.interface'
 
-export interface IOrderProducts {
+export interface IOrderProduct {
   id?: string
   quantity: number
   orderId: string
   productId: string
-  products?: IProduct[]
+  userId?: string
+  product?: IProduct
 }
