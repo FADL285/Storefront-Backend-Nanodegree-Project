@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { OrderModel } from '../models/order.model'
 import { IOrder, OrderStatus } from '../interfaces/order.interface'
 
@@ -98,7 +98,11 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    const order = await OrderModel.create(req.body)
+    const reqBody: IOrder = {
+      status: OrderStatus.ACTIVE,
+      userId: req.body.userId
+    }
+    const order = await OrderModel.create(reqBody)
     res.status(201).json({
       data: order,
       status: 'success',
