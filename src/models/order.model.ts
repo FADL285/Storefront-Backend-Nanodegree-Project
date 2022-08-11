@@ -72,7 +72,6 @@ export class OrderModel {
       //    3. Return the data
       return result
     } catch (err) {
-      console.log(err)
       return throwError({
         message: (err as IError).message,
         statusCode: (err as IError).statusCode,
